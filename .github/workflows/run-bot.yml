@@ -1,0 +1,21 @@
+name: Run Fear and Greed Bot
+on:
+  schedule:
+    - cron: '0 8,20 * * *' # Ejecuta a las 8 AM y 8 PM UTC todos los días
+  workflow_dispatch: # Permite ejecución manual para pruebas
+jobs:
+  run_script:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      - name: Install dependencies
+        run: pip install requests
+      - name: Run script
+        run: python fear_greed_bot.py
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          CHAT_ID: ${{ secrets.CHAT_ID }}
